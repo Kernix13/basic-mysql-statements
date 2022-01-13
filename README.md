@@ -8,6 +8,18 @@ MySQL data types: here is a link to all the [data types](https://dev.mysql.com/d
 
 **NOTE**: You can write upper or lowercase and the query will work. However, it’s more readable if the code is uppercase – so commands in UPPERCASE, values in lowercase.
 
+KEYWORDS:
+
+```sql
+-- all, PK = Primary Key, NN = Not Null, AI = Auto-Increment
+-- *, = , =, <, >,, %, SELECT, FROM, INSERT INTO, VALUES(), WHERE,
+-- UPDATE, SET, DELETE, CREATE TABLE, NOW(), JOIN, ON, foreign keys,
+-- indexes, LIMIT, SUM, MIN, MAX, COUNT, EXPLAIN, RESTRICT, NO ACTION,
+-- CASCADE, SET NULL, LIKE, GROUP BY, HAVING, as, MATCH, AGAINST,
+-- INNER JOIN, LEFT JOIN, RIGHT JOIN, UNION, UNION ALL, ORDER BY,
+-- ASC, DESC, AND, LEFT, CONCAT, IF,
+```
+
 Select all the records in a table:
 
 ```sql
@@ -61,6 +73,27 @@ CREATE TABLE `petfoods`.`products` (
 SELECT * FROM orders JOIN animals ON orders.userid = animals.id
 
 SELECT * FROM orderlines JOIN products ON orderlines.productid = products.id WHERE orderid = 1
+```
+
+Insert multiple rows at once: `VALUES (1, 3, 4), (1, 4, 1), ...`
+
+Aggeragte Function and alias:
+
+```sql
+SELECT SUM(products.priceusd * orderlines.quantity) as 'subtotal'
+```
+
+Nested query:
+
+```sql
+WHERE orderid = (SELECT id FROM orders WHERE userid = 1 LIMIT 1)
+```
+
+TO SEARCH USE PERCENTAGE SIGN:
+
+```sql
+SELECT * FROM petfoods.reviews WHERE description LIKE '%great%';
+SELECT * FROM table_name WHERE MATCH(col_name) AGAINST('search-string')
 ```
 
 ```sql
