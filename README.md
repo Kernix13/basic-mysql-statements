@@ -6,6 +6,7 @@
 1. [Intermediate SQL Statements](#intermediate-sql-statements)
 1. [Advanced SQL Statements](#advanced-sql-statements)
 1. [WordPress examples](#wordpress-examples)
+1. [JavaScript examples](#javascript-examples)
 
 The notes in these markdown files are from the Udemy course [MySQL For Beginners](https://www.udemy.com/course/mysql-for-beginners-real-database-experience-real-fast/) by Brad Schiff. We built a database for pet food orders so you'll see table and field names related to pets.
 
@@ -194,6 +195,8 @@ SELECT name FROM products ORDER BY name
 
 ## Advanced SQL Statements
 
+When I used the word "advanced", I mean advanced to me. I'm sure to a professional that these would be considered intermediate SQL statements.
+
 Create function template:
 
 ```sql
@@ -336,4 +339,34 @@ $results = $wpdb->get_results(
 );
 ```
 
-**NOTE**: I got errors trying to run this for a recent posts function. VS Code was not accepting the asterisks (`*`) at the beginning and ending of the SQL statements. My code was exactly the same as his with opening and closing `php` tags. HE may have had a node package running to accept the syntax but that is just a guess. Would backticks have helped?
+**NOTE**: I got errors trying to run this for a recent posts function. VS Code was not accepting the asterisks (`*`) at the beginning and ending of the SQL statements. My code was exactly the same as his with opening and closing `php` tags. He may have had a node package running to accept the syntax but that is just a guess. Would backticks have helped?
+
+## JavaScript examples
+
+Here are some examples of the code in the Udemy course mentioned at the top of this document.
+
+Create tables and columns if they do not already exist:
+
+```js
+function shapeDatabase(db) {
+  db.query(`CREATE TABLE IF NOT EXISTS users (
+  _id int NOT NULL AUTO_INCREMENT,
+  username varchar(45) DEFAULT NULL,
+  email varchar(100) DEFAULT NULL,
+  password varchar(200) DEFAULT NULL,
+  avatar varchar(100) GENERATED ALWAYS AS (concat(_utf8mb4'https://gravatar.com/avatar/',md5(email),_utf8mb4'?s=128')) VIRTUAL,
+  PRIMARY KEY (_id)
+);
+```
+
+Find all posts by author ID:
+
+```js
+Post.findByAuthorId = async function (authorId) {
+  let [posts] = await db.execute(
+    'SELECT p.title, p.body, p._id, p.author, p.createdDate, u.username, u.avatar FROM posts p JOIN users u  ON p.author = u._id WHERE p.author = ? ORDER BY p.createdDate DESC',
+    [authorId]
+  );
+  return posts;
+};
+```
