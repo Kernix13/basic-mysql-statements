@@ -1,14 +1,27 @@
 # MySQL Notes
 
-The notes in these markdown files are from the Udemy course [MySQL For Beginners](https://www.udemy.com/course/mysql-for-beginners-real-database-experience-real-fast/) by Brad Schiff.
+## Table of contents
+
+1. [Basic SQL Statements](#basic-sql-statements)
+1. [Intermediate SQL Statements](#intermediate-sql-statements)
+1. [Advanced SQL Statements](#advanced-sql-statements)
+1. [WordPress examples](#wordpress-examples)
+
+The notes in these markdown files are from the Udemy course [MySQL For Beginners](https://www.udemy.com/course/mysql-for-beginners-real-database-experience-real-fast/) by Brad Schiff. We built a database for pet food orders so you'll see table and field names related to pets.
 
 ### Useful Links
 
 - [MySQL 8.0 Reference Manual](https://dev.mysql.com/doc/refman/8.0/en/)
 - MySQL data types: here is a link to all the [data types](https://dev.mysql.com/doc/refman/8.0/en/ 'MySQL Data Types').
 - [MySQL Functions list](https://www.techonthenet.com/mysql/functions/index.php)
-- [Import CSV File Into MySQL Table](https://www.mysqltutorial.org/import-csv-file-mysql-table/)
 - [HeidiSQL](https://www.heidisql.com/): see and edit data and structures from computers running one of the database systems MariaDB, MySQL, Microsoft SQL, PostgreSQL and SQLite
+
+#### Importing a CSV file links
+
+- [Import CSV File Into MySQL Table](https://www.mysqltutorial.org/import-csv-file-mysql-table/)
+- [Table Data Export and Import Wizard](https://dev.mysql.com/doc/workbench/en/wb-admin-export-import-table.html)
+- [How to Import CSV File into MySQL Table](https://skyvia.com/blog/how-to-import-csv-file-into-mysql-table-in-4-different-ways)
+- [MYSQL Import Data from CSV File](https://linuxhint.com/import-data-csv-file-mysql/)
 
 ## Basic SQL Statements
 
@@ -179,7 +192,7 @@ SELECT name FROM products ORDER BY name
 
 `DATETIME`: The format for `DATETIME` datatype: `yyyy-mm-dd hh:mm:ss`. To pull in the current time, the time when you execute the sql statement, remove everything from the parens and use `NOW()`, or `VALUES (NOW())`.
 
-## Advanced (for me) SQL
+## Advanced SQL Statements
 
 Create function template:
 
