@@ -290,7 +290,11 @@ SELECT * from animals;
 CREATE SCHEMA testing;
 ```
 
+---
+
 > **DON’T EVER EVER EVER STORE USERS’ REAL PASSWORDS IN PLAIN TEXT! USe `bcrypt` to hash the real Password.**
+
+---
 
 The wrong thing to do is to replace the hard-coded post data with incoming variables. That is what you are ultimately going to do but you need to be very careful in the way that you do that, otherwise you are vulnerable to a SQL injection attack.
 
