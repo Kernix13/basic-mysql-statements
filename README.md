@@ -321,7 +321,7 @@ $wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}woocommerce_order_items" );
 $wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}woocommerce_order_itemmeta" );
 ```
 
-Example from WPCasts YouTube video titled [Custom Queries In WordPress](https://youtu.be/9LzTss23xgU). He prefers using `wpdb` for faster queries. Note: I got errors trying to run this for a recent posts function:
+Example from WPCasts YouTube video titled [Custom Queries In WordPress](https://youtu.be/9LzTss23xgU). He prefers using `wpdb` for faster queries:
 
 ```php
 $results = $wpdb->get_results(
@@ -335,3 +335,5 @@ $results = $wpdb->get_results(
   LIMIT 25*
 );
 ```
+
+**NOTE**: I got errors trying to run this for a recent posts function. VS Code was not accepting the asterisks (`*`) at the beginning and ending of the SQL statements. My code was exactly the same as his with opening and closing `php` tags. HE may have had a node package running to accept the syntax but that is just a guess. Would backticks have helped?
