@@ -2,7 +2,13 @@
 
 The notes in these markdown files are from the Udemy course [MySQL For Beginners](https://www.udemy.com/course/mysql-for-beginners-real-database-experience-real-fast/) by Brad Schiff.
 
-MySQL data types: here is a link to all the [data types](https://dev.mysql.com/doc/refman/8.0/en/ 'MySQL Data Types').
+### Useful Links
+
+- [MySQL 8.0 Reference Manual](https://dev.mysql.com/doc/refman/8.0/en/)
+- MySQL data types: here is a link to all the [data types](https://dev.mysql.com/doc/refman/8.0/en/ 'MySQL Data Types').
+- [MySQL Functions list](https://www.techonthenet.com/mysql/functions/index.php)
+- [Import CSV File Into MySQL Table](https://www.mysqltutorial.org/import-csv-file-mysql-table/)
+- [HeidiSQL](https://www.heidisql.com/): see and edit data and structures from computers running one of the database systems MariaDB, MySQL, Microsoft SQL, PostgreSQL and SQLite
 
 ## Basic SQL Statements
 
@@ -278,3 +284,41 @@ There are several ways to protect against it, but a great option is to use somet
 **NOTE**: you don’t want to make a lot of indexes of indexes that will rarely be used b\c every time someone creates or edits a post, mysql needs to update and maintain the indexes – and that will take more time the more indexes there are to maintain – but it’s worth it if your users will performing searches like that -> compound index
 
 **NOTE**: when you have multiple columns acting as your PK, it is called a Composite Primary Key
+
+## WordPress examples
+
+Examples of Woocommerce code to remove their records from your database tables using `$wpdb`:
+
+```php
+// Delete options.
+$wpdb->query( "DELETE FROM $wpdb->options WHERE option_name LIKE 'woocommerce\_%';" );
+$wpdb->query( "DELETE FROM $wpdb->options WHERE option_name LIKE 'widget\_woocommerce\_%';" );
+
+// Delete usermeta.
+$wpdb->query( "DELETE FROM $wpdb->usermeta WHERE meta_key LIKE 'woocommerce\_%';" );
+
+// Delete posts + data.
+$wpdb->query( "DELETE FROM {$wpdb->posts} WHERE post_type IN ( 'product', 'product_variation', 'shop_coupon', 'shop_order', 'shop_order_refund' );" );
+$wpdb->query( "DELETE meta FROM {$wpdb->postmeta} meta LEFT JOIN {$wpdb->posts} posts ON posts.ID = meta.post_id WHERE posts.ID IS NULL;" );
+
+$wpdb->query( "DELETE FROM {$wpdb->comments} WHERE comment_type IN ( 'order_note' );" );
+$wpdb->query( "DELETE meta FROM {$wpdb->commentmeta} meta LEFT JOIN {$wpdb->comments} comments ON comments.comment_ID = meta.comment_id WHERE comments.comment_ID IS NULL;" );
+
+$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}woocommerce_order_items" );
+$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}woocommerce_order_itemmeta" );
+```
+
+Example from WPCasts YouTube video titled [Custom Queries In WordPress](https://youtu.be/9LzTss23xgU). He prefers using `wpdb` for faster queries. Note: I got errors trying to run this for a recent posts function:
+
+```php
+$results = $wpdb->get_results(
+  *SELECT post_title, post_excerpt, ID
+  FROM $wpdb->posts
+  LEFT JOIN $wpdb->term_relationships as t
+  ON ID = t.object_id
+  WHERE post_type = 'some-type-here'
+  AND post_status = 'publish'
+  AND t.term_taxonomy_id = 3
+  LIMIT 25*
+);
+```
