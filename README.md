@@ -8,7 +8,7 @@ MySQL data types: here is a link to all the [data types](https://dev.mysql.com/d
 
 **NOTE**: You can write upper or lowercase and the query will work. However, it’s more readable if the code is uppercase – so commands in UPPERCASE, values in lowercase.
 
-KEYWORDS:
+**KEYWORDS**:
 
 ```sql
 -- all, PK = Primary Key, NN = Not Null, AI = Auto-Increment
@@ -132,7 +132,7 @@ Aggregate Functions:
 -- also: STD() STDDEV() COUNT(DISTINCT) GROUP_CONCAT() JSON_ARRAYAGG() JSON_OBJECTAGG()
 ```
 
-Group by - use to create 1 row for sub-groups or collections - it makes aggreagte Fxs more powerful - is often used with aggregate functions to group the result-set by one or more columns
+`GRO?UP BY`: Use to create 1 row for sub-groups or collections - it makes aggreagte Fxs more powerful - is often used with aggregate functions to group the result-set by one or more columns
 
 ```sql
 SELECT COUNT(species), species, weight FROM animals GROUP BY species, weight
@@ -163,7 +163,7 @@ LEFT JOIN products p ON ols.productid = p.id
 SELECT * FROM animals UNION SELECT * FROM orders
 ```
 
-UNION with ORDER BY for sort:
+`UNION` with `ORDER BY` for sort:
 
 ```sql
 SELECT name FROM animals
@@ -171,7 +171,7 @@ UNION
 SELECT name FROM products ORDER BY name
 ```
 
-DATETIME: The format for DATETIME datatype: yyyy-mm-dd hh:mm:ss. To pull in the current time, the time when you execute the sql statement, remove everything from the parens and use `NOW()`, or `VALUES (NOW())`.
+`DATETIME`: The format for `DATETIME` datatype: `yyyy-mm-dd hh:mm:ss`. To pull in the current time, the time when you execute the sql statement, remove everything from the parens and use `NOW()`, or `VALUES (NOW())`.
 
 ## Advanced (for me) SQL
 
@@ -186,7 +186,7 @@ RETURN 1;
 END
 ```
 
-STORED FUNCTION: use this when what you want can be boiled down to a single return value or you will be using it a lot.
+**STORED FUNCTION**: use this when what you want can be boiled down to a single return value or you will be using it a lot.
 
 Finished example:
 
@@ -252,7 +252,7 @@ ALTER TABLE `ournodeapp`.`posts`
 ADD FULLTEXT INDEX `titlebodysearch` (`title`, `body`) VISIBLE;
 ```
 
-IN () clause
+`IN ()` clause:
 
 ```sql
 SELECT * FROM posts p JOIN users u ON p.author = u._id WHERE author IN (1, 2)
@@ -273,8 +273,8 @@ The wrong thing to do is to replace the hard-coded post data with incoming varia
 
 There are several ways to protect against it, but a great option is to use something called a prepared statement: You send along your query totally separate from the actual values. The `?` in place of the values lets mysql know in this prepared statement this is where a value is going to be placed.
 
-REMEMBER – it’s very important to have the right index in MySQL – so based on the users search query, we want to search both the title value and the body value – in mysql you use like and % to search – that is fine if you don’t have a lot of rows in a table, but when your table gets large that type of search is slow – this relates to "**full text indexes**".
+**REMEMBER**: It’s very important to have the right index in MySQL – so based on the users search query, we want to search both the title value and the body value – in mysql you use like and % to search – that is fine if you don’t have a lot of rows in a table, but when your table gets large that type of search is slow – this relates to "**full text indexes**".
 
-NOTE: you don’t want to make a lot of indexes of indexes that will rarely be used b\c every time someone creates or edits a post, mysql needs to update and maintain the indexes – and that will take more time the more indexes there are to maintain – but it’s worth it if your users will performing searches like that -> compound index
+**NOTE**: you don’t want to make a lot of indexes of indexes that will rarely be used b\c every time someone creates or edits a post, mysql needs to update and maintain the indexes – and that will take more time the more indexes there are to maintain – but it’s worth it if your users will performing searches like that -> compound index
 
-NOTE: when you have multiple columns acting as your PK, it is called a Composite Primary Key
+**NOTE**: when you have multiple columns acting as your PK, it is called a Composite Primary Key
