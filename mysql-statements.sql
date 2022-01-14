@@ -60,7 +60,7 @@ SELECT * FROM table_name WHERE MATCH(col_name) AGAINST('search-string')
 -- https://www.mysqltutorial.org/mysql-group-by.aspx 
 SELECT COUNT(species), species, weight FROM animals GROUP BY species, weight 
 
--- having better than where
+-- HAVING better than WHERE
 SELECT AVG(weight) as 'Average Weight', species FROM animals GROUP BY species HAVING `Average Weight` >= 50
 
 -- joins with nicknames, multiple left joins, 
@@ -126,7 +126,7 @@ BEGIN
 RETURN 1;
 END
 
--- finihed version:
+-- finished version:
 CREATE DEFINER=`root`@`localhost` FUNCTION `weightLogic`(theweight INT) RETURNS varchar(100) CHARSET utf8mb4
     DETERMINISTIC
 BEGIN
