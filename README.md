@@ -104,6 +104,13 @@ If it is a column that is likely to be queried or searched, especially often, th
 
 Insert multiple rows at once: `VALUES (1, 3, 4), (1, 4, 1), ...`
 
+Aggregate Functions (common or useful ones IMO):
+
+```sql
+-- AVG(col_name) MAX(col_name) MIN(col_name) COUNT(col_name)
+-- STD() STDDEV() COUNT(DISTINCT) GROUP_CONCAT() JSON_ARRAYAGG() JSON_OBJECTAGG()
+```
+
 Aggeragte Function and alias:
 
 ```sql
@@ -111,6 +118,20 @@ SELECT SUM(products.priceusd * orderlines.quantity) as 'subtotal'
 ```
 
 You don't need to spell out the agregate again, just create an alias using the `as` keyword. Also, notice the quotes vs backticks. Look into `WITH ROLLUP`.
+
+`GROUP BY`: Use to create 1 row for sub-groups or collections - it makes aggreagte Fxs more powerful - is often used with aggregate functions to group the result-set by one or more columns
+
+```sql
+SELECT COUNT(species), species, weight FROM animals GROUP BY species, weight
+```
+
+`HAVING` better than `WHERE`:
+
+```sql
+SELECT AVG(weight) as 'Average Weight', species FROM animals GROUP BY species HAVING `Average Weight` >= 50
+```
+
+**NOTE**: `WHERE` filters the data before the items get grouped into their subgroups. Instead use the `HAVING` clause and it filters AFTER the items are grouped into their sub-groups. Use `HAIVING` when you want to filter based on a calculated value from an aggregate function.
 
 Nested query:
 
@@ -124,27 +145,6 @@ To search use the percentage sign - not sure what is the difference with using `
 SELECT * FROM petfoods.reviews WHERE description LIKE '%great%';
 SELECT * FROM table_name WHERE MATCH(col_name) AGAINST('search-string')
 ```
-
-Aggregate Functions:
-
-```sql
--- AVG(col_name) MAX(col_name) MIN(col_name) COUNT(col_name)
--- also: STD() STDDEV() COUNT(DISTINCT) GROUP_CONCAT() JSON_ARRAYAGG() JSON_OBJECTAGG()
-```
-
-`GRO?UP BY`: Use to create 1 row for sub-groups or collections - it makes aggreagte Fxs more powerful - is often used with aggregate functions to group the result-set by one or more columns
-
-```sql
-SELECT COUNT(species), species, weight FROM animals GROUP BY species, weight
-```
-
-`HAVING` better than `WHERE`:
-
-```sql
-SELECT AVG(weight) as 'Average Weight', species FROM animals GROUP BY species HAVING `Average Weight` >= 50
-```
-
-**NOTE**: `WHERE` filters the data before the items get grouped into their subgroups. Instead use the `HAVING` clause and it filters AFTER the items are grouped into their sub-groups. Use `HAIVING` when you want to filter based on a calculated value from an aggregate function.
 
 Joins with nicknames, multiple left joins:
 
