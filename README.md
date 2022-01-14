@@ -105,12 +105,23 @@ CREATE TABLE `petfoods`.`products` (
   PRIMARY KEY (`id`));
 ```
 
-`JOIN` statement:
+`JOIN` statement to 2 or more tables together:
 
 ```sql
 SELECT * FROM orders JOIN animals ON orders.userid = animals.id
 
 SELECT * FROM orderlines JOIN products ON orderlines.productid = products.id WHERE orderid = 1
+```
+
+Joins with nicknames, multiple left joins:
+
+```sql
+SELECT * FROM animals a INNER JOIN orders o ON a.id = o.userid
+
+SELECT * FROM animals a
+LEFT JOIN orders o ON a.id = o.userid
+LEFT JOIN orderlines ols ON ols.orderid = o.id
+LEFT JOIN products p ON ols.productid = p.id
 ```
 
 **NOTE**: When joining tables together by looking for certain ID values, we want to make sue to do that in the fastest most efficient way possible → `foreignkeys` and `indexes`.
@@ -159,28 +170,18 @@ Nested query:
 WHERE orderid = (SELECT id FROM orders WHERE userid = 1 LIMIT 1)
 ```
 
-To search use the percentage sign - not sure what is the difference with using `MATCH`:
+To search, use the percentage sign (`%`). I'm not sure what is the difference with using `MATCH` vs `%`:
 
 ```sql
 SELECT * FROM petfoods.reviews WHERE description LIKE '%great%';
 SELECT * FROM table_name WHERE MATCH(col_name) AGAINST('search-string')
 ```
 
-Joins with nicknames, multiple left joins:
-
-```sql
-SELECT * FROM animals a INNER JOIN orders o ON a.id = o.userid
-
-SELECT * FROM animals a
-LEFT JOIN orders o ON a.id = o.userid
-LEFT JOIN orderlines ols ON ols.orderid = o.id
-LEFT JOIN products p ON ols.productid = p.id
-```
-
-`UNION`:
+`UNION` - UNION combines the result from multiple SELECT statements into a single result set:
 
 ```sql
 SELECT * FROM animals UNION SELECT * FROM orders
+-- query1 UNION query2
 ```
 
 `UNION` with `ORDER BY` for sort:
@@ -197,7 +198,7 @@ SELECT name FROM products ORDER BY name
 
 When I used the word "advanced", I mean advanced to me. I'm sure to a professional that these would be considered intermediate SQL statements.
 
-Create function template:
+**Create function** template:
 
 ```sql
 CREATE FUNCTION `new_function` ()
@@ -229,7 +230,7 @@ Error Code: 1267. Illegal mix of collations (utf8mb4_general_ci,IMPLICIT) and (u
 
 I had to add `COLLATE utf8mb4_0900_ai_ci` at the end of each line that had an equal sign, or the 3 JOIN lines.
 
-Boilerplate stored proceedure:
+Boilerplate **Stored Procedure**:
 
 ```sql
 CREATE PROCEDURE `new_procedure` ()
@@ -255,19 +256,19 @@ LIMIT 5;
 END
 ```
 
-Create database:
+**Create database**:
 
 ```sql
 CREATE SCHEMA `petfoodsref` DEFAULT CHARACTER SET utf8mb4;
 ```
 
-View boilerplate:
+**View** boilerplate:
 
 ```sql
 CREATE VIEW `new_view` AS
 ```
 
-Creating compound index:
+Creating **compound index**:
 
 ```sql
 ALTER TABLE `ournodeapp`.`posts`
@@ -289,7 +290,7 @@ SELECT * from animals;
 CREATE SCHEMA testing;
 ```
 
-DON’T EVER EVER EVER STORE USERS’ REAL PASSWORDS IN PLAIN TEXT! USe `bcrypt` to hash the real Password.
+> **DON’T EVER EVER EVER STORE USERS’ REAL PASSWORDS IN PLAIN TEXT! USe `bcrypt` to hash the real Password.**
 
 The wrong thing to do is to replace the hard-coded post data with incoming variables. That is what you are ultimately going to do but you need to be very careful in the way that you do that, otherwise you are vulnerable to a SQL injection attack.
 
