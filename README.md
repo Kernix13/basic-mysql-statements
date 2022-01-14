@@ -199,7 +199,7 @@ RETURN CONCAT(theweight, IF(theweight >= 75, ' which is not healthy.', ' which i
 END
 ```
 
-**NOTE**: I got an err using his database:
+**NOTE**: I got an error using his database:
 
 ```
 Error Code: 1267. Illegal mix of collations (utf8mb4_general_ci,IMPLICIT) and (utf8mb4_0900_ai_ci,IMPLICIT) for operation '='
@@ -216,7 +216,7 @@ BEGIN
 END
 ```
 
-STORED PROCEDURE: use when you are trying to string together multiple operations.
+**STORED PROCEDURE**: use when you are trying to string together multiple operations.
 
 Example:
 
