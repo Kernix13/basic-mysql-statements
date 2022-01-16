@@ -162,7 +162,7 @@ SELECT COUNT(species), species, weight FROM animals GROUP BY species, weight
 SELECT AVG(weight) as 'Average Weight', species FROM animals GROUP BY species HAVING `Average Weight` >= 50
 ```
 
-**NOTE**: `WHERE` filters the data before the items get grouped into their subgroups. Instead use the `HAVING` clause and it filters AFTER the items are grouped into their sub-groups. Use `HAIVING` when you want to filter based on a calculated value from an aggregate function.
+**NOTE**: `WHERE` filters the data before the items get grouped into their subgroups. Instead use the `HAVING` clause and it filters AFTER the items are grouped into their sub-groups. Use `HAVING` when you want to filter based on a calculated value from an aggregate function.
 
 Nested query:
 
@@ -170,12 +170,23 @@ Nested query:
 WHERE orderid = (SELECT id FROM orders WHERE userid = 1 LIMIT 1)
 ```
 
-To search, use the percentage sign (`%`). I'm not sure what is the difference with using `MATCH` vs `%`:
+To search, use the percentage sign (`%`) along with `WHERE` and `LIKE`. The percentage sign is basically saying: "Any combination of characters, 0 or more of them, can come befoe the phrase". And the same if you include `%` at the end of your phrase:
 
 ```sql
 SELECT * FROM petfoods.reviews WHERE description LIKE '%great%';
-SELECT * FROM table_name WHERE MATCH(col_name) AGAINST('search-string')
 ```
+
+That way is a quick and dirty way to perform a search. However, when you are working with really large datasets, and/or with really long text values, then this method of searching is very inefficient. That is because this approach will perform a full-table scan on every row in the table.
+
+The better approach in that case is to add an index on a column that you tend to need to search often and set it to the type of `FULLTEXT`.
+
+Yu use `MATCH()` long with `AGAINST()` vs `%`:
+
+```sql
+EXPLAIN SELECT * FROM table_name WHERE MATCH(col_name_to_search) AGAINST('search-string')
+```
+
+Using `EXPLAIN` improves efficiency in the search because it does not have to perform a full table scan because it can just look at the `fulltext` index.
 
 `UNION` - UNION combines the result from multiple SELECT statements into a single result set:
 
