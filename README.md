@@ -386,3 +386,5 @@ Post.findByAuthorId = async function (authorId) {
   return posts;
 };
 ```
+
+<!-- testing setting vs code as default git editor -->
