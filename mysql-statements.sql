@@ -43,7 +43,7 @@ SELECT * FROM orderlines JOIN products ON orderlines.productid = products.id WHE
 -- Insert multiple rows at once:
 VALUES (1, 3, 4), (1, 4, 1), ...
 
--- aggeragte Function and alias
+-- Aggregate Function and alias
 SELECT SUM(products.priceusd * orderlines.quantity) as 'subtotal'
 
 -- Nested query
